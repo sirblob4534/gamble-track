@@ -32,52 +32,62 @@
 <html>
 
 <script>
-    let noShowW = false
     let length = Object.keys(localStorage).length
-    let diffW = []
-    let enterW = document.getElementById("enter").addEventListener("click", calcAndDisplayW)
-    let showW = document.getElementById("show").addEventListener("click", graphW)
+    let diff = []
+    let enter = document.getElementById("enter").addEventListener("click", calcAndDisplay)
+    let show = document.getElementById("show").addEventListener("click", graph)
     let container = document.getElementById('container')
-    if (typeof localStorage['dataW'] == 'undefined'){
-        localStorage['dataW'] = JSON.stringify([])
+    if (typeof localStorage['data'] == 'undefined'){
+        localStorage['data'] = JSON.stringify([])
     }
     
     
 
-    function graphW(name){
+    function graph(name){
 
-        let dataW = JSON.parse(localStorage.getItem('dataW'))
+        let data = JSON.parse(localStorage.getItem('data'))
 
-        let dataSetW = anychart.data.set(dataW)    
+        let dataSet = anychart.data.set(data)    
 
-        let willData = dataSetW.mapAs({'x': 0, 'value': 1})
-        let zachData = dataSetW.mapAs({'x': 0, 'value': 2})
-        let nateData = dataSetW.mapAs({'x': 0, 'value': 3})
+        let willData = dataSet.mapAs({'x': 0, 'value': 1})
+        let zachData = dataSet.mapAs({'x': 0, 'value': 2})
+        let nateData = dataSet.mapAs({'x': 0, 'value': 3})
 
-        let chartW = anychart.line()
-        chartW.title('gamble graph')
-        chartW.yAxis().title('Money won/lossed')
+        let chart = anychart.line()
+        chart.title('gamble graph')
+        chart.yAxis().title('Money won/lossed')
 
-        let willLineChartW = chartW.line(willData)
-        willLineChartW.name('Will')
-        willLineChartW.stroke('3 #ff4500')
+        let willLineChart = chart.line(willData)
+        willLineChart.name('Will')
+        willLineChart.stroke('3 #ff4500')
 
-        let zachLineChartW = chartW.line(zachData)
-        zachLineChartW.name('Zach')
-        zachLineChartW.stroke('3 #dd0021')
+        let zachLineChart = chart.line(zachData)
+        zachLineChart.name('Zach')
+        zachLineChart.stroke('3 #dd0021')
 
-        let nateLineChartW = chartW.line(nateData)
-        nateLineChartW.name('Nate')
-        nateLineChartW.stroke('3 #3f00ff')
+        let nateLineChart = chart.line(nateData)
+        nateLineChart.name('Nate')
+        nateLineChart.stroke('3 #3f00ff')
 
-        chartW.legend().enabled(true)
-        chartW.container('container')
-        chartW.draw()
+        chart.legend().enabled(true)
+        chart.container('container')
+        chart.draw()
             
 
     }
 
-    function calcAndDisplayW(){
+    function indexCalc(data){
+        if (typeof (data[data.length - 1]) == 'undefined'){
+            return data
+        }else{
+            return data[data.length - 1]
+        }
+
+
+    }
+
+
+    function calcAndDisplay(){
         let name = document.getElementById('name').value
         let startMon = document.getElementById('startMon').value
         let endMon = document.getElementById('endMon').value
@@ -86,84 +96,91 @@
 
 
         if (confirm('ARE YOU SURE YOU WANT TO ENTER THIS DATA!!!')){
-            let moneyDifW = endMon - startMon
+            let moneyDif = endMon - startMon
 
             if (name == 'W'){
-                let dataW = JSON.parse(localStorage.getItem('dataW'))
-                noShowW = true
-                
-                if (dataW.length == 0){
-                    dataW.push([String(day), String(moneyDifW)])
-                }else{
-                    for (let i = 0; i <= dataW.length - 1; i++){
-                        if (dataW[i][0] == String(day)){
-                            dataW[i].push(moneyDifW)
-                            break
-                            
+                let data = JSON.parse(localStorage.getItem('data'))
+                if (indexCalc(data).length < 4){
+                    noShow = true
+                    
+                    if (data.length == 0){
+                        data.push([String(day), String(moneyDif)])
+                    }else{
+                        for (let i = 0; i <= data.length - 1; i++){
+                            if (data[i][0] == String(day)){
+                                data[i].push(moneyDif)
+                                break
+                                
+                            }
                         }
+                
+                        if (data[data.length - 1][0] != String(day)){
+                            data.push([String(day), moneyDif])
+                        }
+                        
+                        
+                        
+                        
                     }
-            
-                    if (dataW[dataW.length - 1][0] != String(day)){
-                        dataW.push([String(day), moneyDifW])
-                    }
-                    
-                    
-                    
-                    
-                }
 
-                localStorage['dataW'] = JSON.stringify(dataW);
+                    localStorage['data'] = JSON.stringify(data);
+                } 
+
 
             }else if (name == 'Z'){
-                let dataW = JSON.parse(localStorage.getItem('dataW'))
-                noShowW = true
-                
-                if (dataW.length == 0){
-                    dataW.push([String(day), String(moneyDifW)])
-                }else{
-                    for (let i = 0; i <= dataW.length - 1; i++){
-                        if (dataW[i][0] == String(day)){
-                            dataW[i].push(moneyDifW)
-                            break
-                            
+                let data = JSON.parse(localStorage.getItem('data'))
+                if (indexCalc(data).length < 4){
+                    noShow = true
+                    if (data.length == 0){
+                        data.push([String(day), String(moneyDif)])
+                    }else{
+                        for (let i = 0; i <= data.length - 1; i++){
+                            if (data[i][0] == String(day)){
+                                data[i].push(moneyDif)
+                                break
+                                
+                            }
                         }
-                    }
                 
-                    if (dataW[dataW.length - 1][0] != String(day)){
-                        dataW.push([String(day), moneyDifW])
+                        if (data[data.length - 1][0] != String(day)){
+                            data.push([String(day), moneyDif])
+                        }
+                        
+                        
+                        
+                        
                     }
-                                    
-                    
-                    
-                }
 
-                localStorage['dataW'] = JSON.stringify(dataW)
-
+                    localStorage['data'] = JSON.stringify(data);
+                } 
                 
             }else if (name == 'N'){
-                let dataW = JSON.parse(localStorage.getItem('dataW'))
-                noShowW = true
-                
-                if (dataW.length == 0){
-                    dataW.push([String(day), String(moneyDifW)])
-                }else{
-                    for (let i = 0; i <= dataW.length - 1; i++){
-                        if (dataW[i][0] == String(day)){
-                            dataW[i].push(moneyDifW)
-                            break
-                            
+                let data = JSON.parse(localStorage.getItem('data'))
+                if (indexCalc(data).length < 4){
+                    noShow = true
+                    
+                    if (data.length == 0){
+                        data.push([String(day), String(moneyDif)])
+                    }else{
+                        for (let i = 0; i <= data.length - 1; i++){
+                            if (data[i][0] == String(day)){
+                                data[i].push(moneyDif)
+                                break
+                                
+                            }
                         }
-                    }
                 
+                        if (data[data.length - 1][0] != String(day)){
+                            data.push([String(day), moneyDif])
+                        }
+                        
+                        
+                        
+                        
+                    }
 
-                    if (dataW[dataW.length - 1][0] != String(day)){
-                        dataW.push([String(day), moneyDifW])
-                    }                    
-                    
-                    
-                }
-
-                localStorage['dataW'] = JSON.stringify(dataW)
+                    localStorage['data'] = JSON.stringify(data);
+                } 
 
             }else{ 
             }

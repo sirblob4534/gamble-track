@@ -100,7 +100,7 @@
 
             if (name == 'W'){
                 let data = JSON.parse(localStorage.getItem('data'))
-                if (indexCalc(data).length < 4){
+                if (indexCalc(data).length < 5){
                     noShow = true
                     
                     if (data.length == 0){
@@ -129,7 +129,7 @@
 
             }else if (name == 'Z'){
                 let data = JSON.parse(localStorage.getItem('data'))
-                if (indexCalc(data).length < 4){
+                if (indexCalc(data).length < 5){
                     noShow = true
                     if (data.length == 0){
                         data.push([String(day), String(moneyDif)])
@@ -156,7 +156,7 @@
                 
             }else if (name == 'N'){
                 let data = JSON.parse(localStorage.getItem('data'))
-                if (indexCalc(data).length < 4){
+                if (indexCalc(data).length < 5){
                     noShow = true
                     
                     if (data.length == 0){

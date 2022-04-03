@@ -98,16 +98,16 @@
         if (confirm('ARE YOU SURE YOU WANT TO ENTER THIS DATA!!!')){
             let moneyDif = endMon - startMon
 
-            if (name == 'W'){
+            if (name == 'W' || name == 'Z' || name == 'N'){
                 let data = JSON.parse(localStorage.getItem('data'))
                 if (indexCalc(data).length < 5){
                     noShow = true
                     
                     if (data.length == 0){
-                        data.push([String(day), String(moneyDif)])
+                        data.push([(day).toString(), (moneyDif).toString()])
                     }else{
                         for (let i = 0; i <= data.length - 1; i++){
-                            if (data[i][0] == String(day)){
+                            if (data[i][0] == (day).toString()){
                                 data[i].push(moneyDif)
                                 break
                                 
@@ -115,63 +115,7 @@
                         }
                 
                         if (data[data.length - 1][0] != String(day)){
-                            data.push([String(day), moneyDif])
-                        }
-                        
-                        
-                        
-                        
-                    }
-
-                    localStorage['data'] = JSON.stringify(data);
-                } 
-
-
-            }else if (name == 'Z'){
-                let data = JSON.parse(localStorage.getItem('data'))
-                if (indexCalc(data).length < 5){
-                    noShow = true
-                    if (data.length == 0){
-                        data.push([String(day), String(moneyDif)])
-                    }else{
-                        for (let i = 0; i <= data.length - 1; i++){
-                            if (data[i][0] == String(day)){
-                                data[i].push(moneyDif)
-                                break
-                                
-                            }
-                        }
-                
-                        if (data[data.length - 1][0] != String(day)){
-                            data.push([String(day), moneyDif])
-                        }
-                        
-                        
-                        
-                        
-                    }
-
-                    localStorage['data'] = JSON.stringify(data);
-                } 
-                
-            }else if (name == 'N'){
-                let data = JSON.parse(localStorage.getItem('data'))
-                if (indexCalc(data).length < 5){
-                    noShow = true
-                    
-                    if (data.length == 0){
-                        data.push([String(day), String(moneyDif)])
-                    }else{
-                        for (let i = 0; i <= data.length - 1; i++){
-                            if (data[i][0] == String(day)){
-                                data[i].push(moneyDif)
-                                break
-                                
-                            }
-                        }
-                
-                        if (data[data.length - 1][0] != String(day)){
-                            data.push([String(day), moneyDif])
+                            data.push([(day).toString(), (moneyDif).toString()])
                         }
                         
                         

@@ -35,8 +35,8 @@
     let noShowW = false
     let length = Object.keys(localStorage).length
     let diffW = []
-    let enterW = document.getElementById("enter").addEventListener("click", calcAndDisplayW);
-    let showW = document.getElementById("show").addEventListener("click", graphW);
+    let enterW = document.getElementById("enter").addEventListener("click", calcAndDisplayW)
+    let showW = document.getElementById("show").addEventListener("click", graphW)
     let container = document.getElementById('container')
     if (typeof localStorage['dataW'] == 'undefined'){
         localStorage['dataW'] = JSON.stringify([])
@@ -47,93 +47,36 @@
     function graphW(name){
 
         let dataW = JSON.parse(localStorage.getItem('dataW'))
+
+        let dataSetW = anychart.data.set(dataW)    
+
+        let willData = dataSetW.mapAs({'x': 0, 'value': 1})
+        let zachData = dataSetW.mapAs({'x': 0, 'value': 2})
+        let nateData = dataSetW.mapAs({'x': 0, 'value': 3})
+
+        let chartW = anychart.line()
+        chartW.title('gamble graph')
+        chartW.yAxis().title('Money won/lossed')
+
+        let willLineChartW = chartW.line(willData)
+        willLineChartW.name('Will')
+        willLineChartW.stroke('3 #ff4500')
+
+        let zachLineChartW = chartW.line(zachData)
+        zachLineChartW.name('Zach')
+        zachLineChartW.stroke('3 #dd0021')
+
+        let nateLineChartW = chartW.line(nateData)
+        nateLineChartW.name('Nate')
+        nateLineChartW.stroke('3 #3f00ff')
+
+        chartW.legend().enabled(true)
+        chartW.container('container')
+        chartW.draw()
             
-
-        
-        if (noShowW == false){
-
-                
-            for (let i = 1; i <= Object.keys(localStorage).length; i++){
-                let storedW = localStorage.getItem("diffW;" + String(i))
-                dataW.push([String(i), storedW])
-                console.log('test')
-            }
-
-            dataW.pop()
-            localStorage['dataW'] = JSON.stringify(dataW);
-            
-
-
-            for (let i = 1; i <= Object.keys(localStorage).length; i++){
-                let storedZ = localStorage.getItem("diffZ;" + String(i))
-                console.log(dataW[0][0])
-                if (localStorage['dataW'][i - 1][0] == String(i)){
-                    localStorage['dataW'][i - 1].push(storedZ)
-
-                }
-
-            }
-
-            console.log(dataW)
-            //dataW.pop()
-            localStorage['dataW'] = JSON.stringify(dataW);
-                
-            let dataSetW = anychart.data.set(dataW);        
-            //console.log(test)
-            let seriesDataW = dataSetW.mapAs({'x': 0, 'value': 1});
-            let chartW = anychart.line();
-            chartW.title('Will\'s graph');
-            chartW.yAxis().title('Money won/lossed');
-            let lineChartW = chartW.line(seriesDataW);
-            chartW.container('container');
-            chartW.draw();
-            
-
-        }else{
-            if (name == 'W'){
-                
-                for (let i = 1; i <= Object.keys(localStorage).length; i++){
-                    let storedW = localStorage.getItem("diffW;" + String(i))
-                    dataW.push([String(i), storedW])
-                    
-                    console.log('test')
-                }
-                dataW.pop()
-                console.log(dataW)
-                localStorage['dataW'] = JSON.stringify(dataW);
-
-            }else if (name == 'Z'){
-                localStorage['dataW'] = JSON.stringify(dataW);
-                for (let i = 1; i <= Object.keys(localStorage).length; i++){
-                    let storedZ = localStorage.getItem("diffZ;" + String(i))
-                    if (dataW[0][0] == String(i)){
-                        dataW[0].push(storedZ)
-
-                    }
-
-                }
-                //dataW.pop()
-                console.log(dataW)
-                localStorage['dataW'] = JSON.stringify(dataW);
-                
-                
-            }
-
-            let dataSetW = anychart.data.set(dataW);        
-            //console.log(test)
-            let seriesDataW = dataSetW.mapAs({'x': 0, 'value': 1});
-            let chartW = anychart.line();
-            chartW.title('gamble graph');
-            chartW.yAxis().title('Money won/lossed');
-            let lineChartW = chartW.line(seriesDataW);
-            chartW.container('container');
-            
-        }
-
 
     }
 
-    let check = true
     function calcAndDisplayW(){
         let name = document.getElementById('name').value
         let startMon = document.getElementById('startMon').value
@@ -154,7 +97,6 @@
                 }else{
                     for (let i = 0; i <= dataW.length - 1; i++){
                         if (dataW[i][0] == String(day)){
-                            console.log('test')
                             dataW[i].push(moneyDifW)
                             break
                             
@@ -171,10 +113,7 @@
                 }
 
                 localStorage['dataW'] = JSON.stringify(dataW);
-                //localStorage.setItem("diffZ;" + String(day), moneyDifW)
-                //diffW.push(moneyDifW)
-                //graphW(name)
-                
+
             }else if (name == 'Z'){
                 let dataW = JSON.parse(localStorage.getItem('dataW'))
                 noShowW = true
@@ -184,7 +123,6 @@
                 }else{
                     for (let i = 0; i <= dataW.length - 1; i++){
                         if (dataW[i][0] == String(day)){
-                            console.log('test')
                             dataW[i].push(moneyDifW)
                             break
                             
@@ -199,10 +137,8 @@
                     
                 }
 
-                localStorage['dataW'] = JSON.stringify(dataW);
-                //localStorage.setItem("diffZ;" + String(day), moneyDifW)
-                //diffW.push(moneyDifW)
-                //graphW(name)
+                localStorage['dataW'] = JSON.stringify(dataW)
+
                 
             }else if (name == 'N'){
                 let dataW = JSON.parse(localStorage.getItem('dataW'))
@@ -213,7 +149,6 @@
                 }else{
                     for (let i = 0; i <= dataW.length - 1; i++){
                         if (dataW[i][0] == String(day)){
-                            console.log('test')
                             dataW[i].push(moneyDifW)
                             break
                             
@@ -228,11 +163,8 @@
                     
                 }
 
-                localStorage['dataW'] = JSON.stringify(dataW);
-                //localStorage.setItem("diffZ;" + String(day), moneyDifW)
-                //diffW.push(moneyDifW)
-                //graphW(name)
-                
+                localStorage['dataW'] = JSON.stringify(dataW)
+
             }else{ 
             }
         }
